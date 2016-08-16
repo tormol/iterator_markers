@@ -1,0 +1,17 @@
+lib = {path="lib.rs"}
+
+[package]
+name = "iterator_markers"
+keywords = ["Iterator", "iterators", "marker"]
+description = "Marker traits for iterators that produce unique and/or sorted items."
+readme = "README.md"
+documentation = "https://tormol.github.io/rustdoc/iterator_markers"
+repository = "https://github.com/tormol/iterator_markers"
+license = "Apache-2.0 / MIT"
+authors = ["Torbjørn Birch Moltu <t.b.moltu@lyse.net>"]
+
+version = "0.1.0"
+
+[features]
+no_std = []
+unstable = []
