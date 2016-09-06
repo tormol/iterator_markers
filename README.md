@@ -6,8 +6,8 @@ Extra marker traits for iterators:
 * **[DescendingIterator](http://tormol.github.io/rustdoc/iterator_markers/trait.DescendingIterator.html)**
 
 ## Feature flags:
+* **unstable**: Implement for `Range` and `RangeInclusive`.
 * **no_std**: Use `#[no_std]` and don't implement for the map and set iterators in std.
-* **unsafe**: Implement for `Range` and `RangeInclusive`.
 
 ## License
 

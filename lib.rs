@@ -1,3 +1,17 @@
+// Copyright 2016 Torbjørn Birch Moltu.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+//! Extra marker traits for iterators.
+//!
+//! # Feature flags:
+//! * **unstable**: Implement for `Range` and `RangeInclusive`.
+//! * **no_std**: Use `#[no_std]` and don't implement for the map and set iterators in std.
+
 #![cfg_attr(feature="unstable", feature(inclusive_range, step_trait))]
 #![cfg_attr(feature="no_std", no_std)]
 
@@ -15,7 +29,7 @@ pub unsafe trait UniqueIterator: Iterator where Self::Item: PartialEq
 /// It does not guarantee uniqueness, but equal items must come straight after each other.
 /// Use `I: UniqueIterator+AscendingIterator` if you need both.
 ///
-/// The trait is unsafe so consumers can rely on it.
+/// The trait is unsafe so consumers can rely on it.  
 /// It is a logic error to implement both `AscendingIterator` and `DescendingIterator` for the same type.
 ///
 /// # Examples:
@@ -29,7 +43,7 @@ pub unsafe trait AscendingIterator: Iterator where Self::Item: PartialOrd
 /// It does not guarantee uniqueness, but equal items must come straight after each other.
 /// Use `I: UniqueIterator+DescendingIterator` if you need both.
 ///
-/// The trait is unsafe so consumers can rely on it.
+/// The trait is unsafe so consumers can rely on it.  
 /// It is a logic error to implement both `AscendingIterator` and `DescendingIterator` for the same type.
 ///
 /// # Examples:
@@ -57,12 +71,6 @@ mod unstable {
     use super::{UniqueIterator,AscendingIterator};
     use core::ops::{Range,RangeInclusive, Add};
     use core::iter::Step;// is unstable and must be specified.
-
-    // I wish this worked: unsafe impl<T> UniqueIterator for Range<T> where Range<T>: Iterator<Item=T> {}
-    // Error if clause is never satisfied, because coherence doesn't allow this:
-    //     pub struct S(usize);
-    //     impl Iterator for core::ops::RangeTo<S>
-    //         {type Item=usize; fn next(&self) -> Option<usize>{None}}
 
     /// Requires the feature `unstable`.
     unsafe impl<T:PartialEq+Step> UniqueIterator for Range<T> where for<'a> &'a T: Add<&'a T, Output=T> {}
@@ -115,7 +123,7 @@ mod collections {
     unsafe impl<T:Ord> AscendingIterator for btree_set::IntoIter<T> {}
     unsafe impl<'a, T:Ord> AscendingIterator for btree_set::Iter<'a,T> {}
     unsafe impl<'a, T:Ord> AscendingIterator for btree_set::Intersection<'a,T> {}
-    // Are the others sortedd?
+    // Are the others sorted?
 }
 #[cfg(not(feature="no_std"))]
 pub use collections::*;
