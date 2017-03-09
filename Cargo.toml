@@ -13,5 +13,6 @@ authors = ["Torbjørn Birch Moltu <t.b.moltu@lyse.net>"]
 version = "0.1.0"
 
 [features]
-no_std = []
 unstable = []
+std = []
+default = ["std"]

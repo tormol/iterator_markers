@@ -7,7 +7,7 @@ Extra marker traits for iterators:
 
 ## Feature flags:
 * **unstable**: Implement for `Range` and `RangeInclusive`.
-* **no_std**: Use `#[no_std]` and don't implement for the map and set iterators in std.
+* (opt-out) **std**: Implement for the map and set iterators in std and don't set `#[no_std]`.
 
 ## License
 

@@ -10,12 +10,12 @@
 //!
 //! # Feature flags:
 //! * **unstable**: Implement for `Range` and `RangeInclusive`.
-//! * **no_std**: Use `#[no_std]` and don't implement for the map and set iterators in std.
+//! * (opt-out) **std**: Implement for the map and set iterators in std and don't set `#[no_std]`.
 
 #![cfg_attr(feature="unstable", feature(inclusive_range, step_trait))]
-#![cfg_attr(feature="no_std", no_std)]
+#![cfg_attr(not(feature="std"), no_std)]
 
-#[cfg(not(feature="no_std"))]
+#[cfg(feature="std")]
 extern crate core;
 use core::iter::*;
 
@@ -87,7 +87,7 @@ mod unstable {
 pub use unstable::*;
 
 
-#[cfg(not(feature="no_std"))]
+#[cfg(feature="std")]
 mod collections {
     use super::{UniqueIterator,AscendingIterator};
     use std::collections::{hash_map, btree_map, hash_set, btree_set};
@@ -125,7 +125,7 @@ mod collections {
     unsafe impl<'a, T:Ord> AscendingIterator for btree_set::Intersection<'a,T> {}
     // Are the others sorted?
 }
-#[cfg(not(feature="no_std"))]
+#[cfg(feature="std")]
 pub use collections::*;
 
 
